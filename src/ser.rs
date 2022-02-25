@@ -246,6 +246,7 @@ impl Serializer for Nothing {
             Ok(())
         }
     }
+
     fn collect_map<K, V, I>(self, iter: I) -> Result<(), NothingSerializeError>
     where
         I: IntoIterator<Item = (K, V)>,
@@ -256,11 +257,29 @@ impl Serializer for Nothing {
             Ok(())
         }
     }
+
     fn collect_str<T: ?Sized>(self, value: &T) -> Result<(), NothingSerializeError>
     where
         T: fmt::Display,
     {
-        if value.to_string().is_empty() {
+        use core::fmt::Write;
+
+        struct WriteEmpty;
+
+        impl Write for WriteEmpty {
+            fn write_str(&mut self, s: &str) -> fmt::Result {
+                if s.is_empty() {
+                    Ok(())
+                } else {
+                    Err(fmt::Error)
+                }
+            }
+            fn write_char(&mut self, _: char) -> fmt::Result {
+                Err(fmt::Error)
+            }
+        }
+
+        if write!(&mut WriteEmpty, "{}", value).is_ok() {
             Ok(())
         } else {
             Err(NothingSerializeError)

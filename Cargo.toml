@@ -17,7 +17,7 @@ std = ["serde/std"]
 default = ["std"]
 
 [dependencies]
-serde = "1.0"
+serde = { version = "1.0", default-features = false }
 
 [dev-dependencies]
 serde_derive = "1.0"
