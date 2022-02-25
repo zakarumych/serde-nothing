@@ -65,6 +65,16 @@ where
     value.serialize(Nothing).is_ok()
 }
 
+/// Returns some "nothing" value of the type.
+/// Or none if failed to create one.
+#[inline]
+pub fn from_nothing<'de, T>() -> Option<T>
+where
+    T: serde::de::Deserialize<'de>,
+{
+    T::deserialize(Nothing).ok()
+}
+
 #[cfg(test)]
 mod tests {
     use core::fmt::Debug;
