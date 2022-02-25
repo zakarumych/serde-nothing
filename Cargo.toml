@@ -1,0 +1,23 @@
+[package]
+name = "serde-nothing"
+version = "0.1.0"
+edition = "2018"
+authors = ["Zakarum <zakarumych@ya.ru>"]
+license = "MIT OR Apache-2.0"
+documentation = "https://docs.rs/serde-nothing"
+homepage = "https://github.com/zakarumych/serde-nothing"
+repository = "https://github.com/zakarumych/serde-nothing"
+readme = "README.md"
+description = "Serialize to nothing. Deserialize from nothing"
+categories = ["encoding", "no-std"]
+keywords = ["serialization", "deserialization", "serde", "utilities"]
+
+[features]
+std = ["serde/std"]
+default = ["std"]
+
+[dependencies]
+serde = "1.0"
+
+[dev-dependencies]
+serde_derive = "1.0"
